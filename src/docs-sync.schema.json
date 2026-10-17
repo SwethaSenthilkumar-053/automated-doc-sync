@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Automated Documentation Sync mapping",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "mappings"],
+  "properties": {
+    "version": { "const": 1 },
+    "mappings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "sources", "targets"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,63}$" },
+          "sources": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": { "type": "string", "minLength": 1 }
+          },
+          "targets": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["path", "kind", "generator", "markers"],
+                  "properties": {
+                    "path": { "type": "string", "minLength": 1 },
+                    "kind": { "const": "markdown" },
+                    "generator": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,63}$" },
+                    "markers": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": ["start", "end"],
+                      "properties": {
+                        "start": { "type": "string", "minLength": 1 },
+                        "end": { "type": "string", "minLength": 1 }
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["path", "kind", "generator"],
+                  "properties": {
+                    "path": { "type": "string", "minLength": 1 },
+                    "kind": { "const": "api" },
+                    "generator": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,63}$" }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

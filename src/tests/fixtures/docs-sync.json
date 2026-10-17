@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "mappings": [
+    {
+      "id": "sample-api",
+      "sources": ["src/**/*.py"],
+      "targets": [
+        {
+          "path": "docs/sample.md",
+          "kind": "markdown",
+          "generator": "sample-api",
+          "markers": {
+            "start": "<!-- generated:start -->",
+            "end": "<!-- generated:end -->"
+          }
+        }
+      ]
+    }
+  ]
+}
